@@ -39,10 +39,16 @@ without a GPU; delete a cache to recompute.
 
 ## Install
 
+Python 3.10+.
+
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+Rendering from the shipped caches needs no model — 9 of the 10 concepts run offline
+immediately. The exploration sketches (concept 3), and any *new* seed you request in a
+model-backed concept, download GPT-2 (~500 MB, once) via `transformers` on first use.
 
 ## Generate
 

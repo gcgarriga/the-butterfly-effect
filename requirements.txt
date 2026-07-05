@@ -1,5 +1,10 @@
-torch
-transformers
-numpy
-matplotlib
-pillow
+# Python 3.10+.
+# Tested with: torch 2.12.1, transformers 5.12.1, numpy 2.5.0,
+# matplotlib 3.11.0, pillow 12.2.0 (on Python 3.14).
+# Floors install broadly; the transformers cap guards against a future major
+# dropping the GPT-2 classes this project relies on.
+torch>=2.2
+transformers>=4.40,<6
+numpy>=1.24
+matplotlib>=3.7
+pillow>=10
