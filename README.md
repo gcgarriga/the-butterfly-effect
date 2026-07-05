@@ -84,23 +84,20 @@ concepts/<n>-<name>/
     *.npy / *.npz     small precomputed model-data caches
 ```
 
-## Development & tests
+## Tests
 
 A pytest smoke suite runs every generator at a tiny size and checks it exits cleanly
 and emits a correctly-sized PNG, plus unit tests for the size parser.
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -m "not model"     # fast: cache-backed + procedural concepts, no GPT-2 download
-RUN_MODEL_TESTS=1 pytest  # full: also the GPT-2-dependent exploration sketches
+pytest -m "not model"     # fast: uses shipped caches, no GPT-2 download
+RUN_MODEL_TESTS=1 pytest  # full: also the GPT-2-dependent sketches
 ```
 
-The fast suite needs no model download (it uses the small shipped `.npy`/`.npz`
-caches), so it doubles as a check that those caches are present and valid.
-
-GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs `ruff`
-lint + the fast smoke suite on every push/PR; the model job is available via
-**Run workflow** (manual dispatch).
+The fast suite needs no model download, so it doubles as a check that the shipped
+`.npy`/`.npz` caches are valid. Lint + the fast suite also run in CI on every push
+([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
 
 ## License
 
