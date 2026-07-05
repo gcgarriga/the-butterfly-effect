@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "model: test requires downloading GPT-2 weights (set RUN_MODEL_TESTS=1 to run)",
+]
