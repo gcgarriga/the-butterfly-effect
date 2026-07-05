@@ -59,11 +59,17 @@ def main():
     for i, j, wt in links:
         p0, p3 = node[j], node[i]
         p1, p2 = p0 * 0.15, p3 * 0.15  # pull toward centre -> bundle
-        curve = ((1 - tb) ** 3 * p0 + 3 * (1 - tb) ** 2 * tb * p1
-                 + 3 * (1 - tb) * tb**2 * p2 + tb**3 * p3)
+        curve = (
+            (1 - tb) ** 3 * p0
+            + 3 * (1 - tb) ** 2 * tb * p1
+            + 3 * (1 - tb) * tb**2 * p2
+            + tb**3 * p3
+        )
         col = cmap(ang[j] / (2 * np.pi))
         for width, a in [(7, 0.06), (3, 0.15), (1.3, 0.5 + 0.5 * wt / smax)]:
-            ax.plot(curve[:, 0], curve[:, 1], color=col, lw=width * lw, alpha=min(a, 1.0))
+            ax.plot(
+                curve[:, 0], curve[:, 1], color=col, lw=width * lw, alpha=min(a, 1.0)
+            )
     ax.set_aspect("equal")
     ax.set_xlim(-1.15, 1.15)
     ax.set_ylim(-1.15, 1.15)

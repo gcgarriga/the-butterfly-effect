@@ -31,7 +31,9 @@ def resolve(size: str) -> tuple[int, int]:
     if "x" in size.lower():
         w, h = size.lower().split("x")
         return int(w), int(h)
-    raise ValueError(f"Unknown size {size!r}; use a preset {list(SIZES)} or WxH, e.g. 2560x1440")
+    raise ValueError(
+        f"Unknown size {size!r}; use a preset {list(SIZES)} or WxH, e.g. 2560x1440"
+    )
 
 
 def aspect(w: int, h: int) -> float:
@@ -51,8 +53,11 @@ def new_fig(w: int, h: int, bg: str = DEFAULT_BG, dpi: int = 100):
 def base_parser(description: str) -> argparse.ArgumentParser:
     """Common CLI: --size, --out, --dpi. Concepts add --seed/--palette/etc."""
     p = argparse.ArgumentParser(description=description)
-    p.add_argument("--size", default=DEFAULT_SIZE,
-                   help=f"preset {list(SIZES)} or WIDTHxHEIGHT (default: {DEFAULT_SIZE})")
+    p.add_argument(
+        "--size",
+        default=DEFAULT_SIZE,
+        help=f"preset {list(SIZES)} or WIDTHxHEIGHT (default: {DEFAULT_SIZE})",
+    )
     p.add_argument("--out", default=None, help="output PNG path (default: auto-named)")
     p.add_argument("--dpi", type=int, default=100, help="raster dpi (default: 100)")
     return p

@@ -67,7 +67,9 @@ def field(seed, w, h, k=44):
 
 def draw(ax, Z, cmap):
     sigma = np.abs(Z).max() * 0.045
-    inten = np.exp(-(Z**2) / (2 * sigma**2)) + 0.4 * np.exp(-(Z**2) / (2 * (3 * sigma) ** 2))
+    inten = np.exp(-(Z**2) / (2 * sigma**2)) + 0.4 * np.exp(
+        -(Z**2) / (2 * (3 * sigma) ** 2)
+    )
     inten /= inten.max()
     ax.imshow(inten, origin="lower", aspect="auto", cmap=cmap, interpolation="bilinear")
     ax.axis("off")
@@ -81,7 +83,9 @@ def main():
 
     w, h = presets.resolve(args.size)
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
-    draw(ax, field(args.seed, w, h), LSC.from_list(args.palette, PALETTES[args.palette]))
+    draw(
+        ax, field(args.seed, w, h), LSC.from_list(args.palette, PALETTES[args.palette])
+    )
     out = args.out or f"chladni_{args.palette}_s{args.seed}_{w}x{h}.png"
     fig.savefig(out, dpi=args.dpi, facecolor=BG)
     print("saved", out)

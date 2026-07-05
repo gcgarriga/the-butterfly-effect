@@ -29,10 +29,16 @@ PROMPT = "The fundamental nature of chaos and reality is"
 N_NEW, TEMP, SEED_A, SEED_B = 30, 1.5, 42, 1337
 
 PALETTES = {
-    "magma": "magma", "inferno": "inferno", "turbo": "turbo",
-    "viridis": "viridis", "plasma": "plasma", "twilight": "twilight_shifted",
-    "butterfly": LSC.from_list("butterfly",
-        ["#08001f", "#3a0ca3", "#7209b7", "#b5179e", "#f72585", "#ff8800", "#ffd60a"]),
+    "magma": "magma",
+    "inferno": "inferno",
+    "turbo": "turbo",
+    "viridis": "viridis",
+    "plasma": "plasma",
+    "twilight": "twilight_shifted",
+    "butterfly": LSC.from_list(
+        "butterfly",
+        ["#08001f", "#3a0ca3", "#7209b7", "#b5179e", "#f72585", "#ff8800", "#ffd60a"],
+    ),
 }
 
 
@@ -50,9 +56,14 @@ def compute_delta():
         torch.manual_seed(seed)
         ids = tok(PROMPT, return_tensors="pt").input_ids
         with torch.no_grad():
-            gen = model.generate(ids, do_sample=True, temperature=TEMP,
-                                 min_new_tokens=N_NEW, max_new_tokens=N_NEW,
-                                 pad_token_id=tok.eos_token_id)
+            gen = model.generate(
+                ids,
+                do_sample=True,
+                temperature=TEMP,
+                min_new_tokens=N_NEW,
+                max_new_tokens=N_NEW,
+                pad_token_id=tok.eos_token_id,
+            )
             out = model(gen, output_hidden_states=True)
         return out.hidden_states[-1].squeeze(0)
 
@@ -83,7 +94,9 @@ def main():
     if args.style == "raw":
         ax.imshow(delta.T, aspect="auto", cmap=cmap, interpolation="nearest")
     else:
-        img = blur(delta.T[np.argsort(delta.mean(0))])  # sort neurons by mean divergence
+        img = blur(
+            delta.T[np.argsort(delta.mean(0))]
+        )  # sort neurons by mean divergence
         norm = PowerNorm(0.55, vmin=0, vmax=float(np.percentile(delta, 98)))
         ax.imshow(img, aspect="auto", cmap=cmap, norm=norm, interpolation="bilinear")
     ax.axis("off")

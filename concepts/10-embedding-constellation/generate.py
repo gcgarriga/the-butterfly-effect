@@ -92,8 +92,12 @@ def main():
         ax.add_collection(LineCollection(pos[edges], colors=c, linewidths=lw * s))
     ncol = cmap(hue)
     for sz, a in [(90, 0.10), (34, 0.25), (10, 0.9)]:
-        ax.scatter(pos[:, 0], pos[:, 1], s=sz * s * s, c=ncol, alpha=a, edgecolors="none")
-    ax.scatter(pos[:, 0], pos[:, 1], s=2.5 * s * s, c="white", alpha=0.9, edgecolors="none")
+        ax.scatter(
+            pos[:, 0], pos[:, 1], s=sz * s * s, c=ncol, alpha=a, edgecolors="none"
+        )
+    ax.scatter(
+        pos[:, 0], pos[:, 1], s=2.5 * s * s, c="white", alpha=0.9, edgecolors="none"
+    )
     ax.set_xlim(*np.percentile(pos[:, 0], [1, 99]))
     ax.set_ylim(*np.percentile(pos[:, 1], [1, 99]))
     ax.axis("off")

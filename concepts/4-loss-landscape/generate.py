@@ -23,12 +23,20 @@ from common import presets  # noqa: E402
 
 BG = "#04060d"
 GRID, RANGE = 81, 1.0
-EVAL_TEXT = "The history of artificial intelligence is a story of ambition and breakthroughs."
+EVAL_TEXT = (
+    "The history of artificial intelligence is a story of ambition and breakthroughs."
+)
 
 PALETTES = {
-    "magma": "magma", "inferno": "inferno", "viridis": "viridis",
-    "abyss": LSC.from_list("abyss", ["#05030f", "#1b1450", "#7209b7", "#f72585", "#ff8800", "#ffe08a"]),
-    "ember": LSC.from_list("ember", ["#06010a", "#3a0606", "#c81d25", "#ff7b00", "#ffe08a", "#fffaf0"]),
+    "magma": "magma",
+    "inferno": "inferno",
+    "viridis": "viridis",
+    "abyss": LSC.from_list(
+        "abyss", ["#05030f", "#1b1450", "#7209b7", "#f72585", "#ff8800", "#ffe08a"]
+    ),
+    "ember": LSC.from_list(
+        "ember", ["#06010a", "#3a0606", "#c81d25", "#ff7b00", "#ffe08a", "#fffaf0"]
+    ),
     "twilight": "twilight_shifted",
 }
 
@@ -53,7 +61,9 @@ def compute_terrain(seed):
             d = torch.randn_like(p)
             if p.dim() >= 2:
                 df, pf = d.flatten(1), p.flatten(1)
-                d = (df * (pf.norm(dim=1) / (df.norm(dim=1) + 1e-10))[:, None]).view_as(p)
+                d = (df * (pf.norm(dim=1) / (df.norm(dim=1) + 1e-10))[:, None]).view_as(
+                    p
+                )
             else:
                 d = torch.zeros_like(p)
             dirs.append(d)
@@ -107,10 +117,25 @@ def draw(ax, Z, cmap, s):
     ax.contour(Zc, levels=22, colors="white", linewidths=0.22 * s, alpha=0.16)
     path = descent_path(Z)
     for lw, a in [(9, 0.10), (5, 0.20), (2.4, 0.45), (1.1, 0.97)]:
-        ax.plot(path[:, 0], path[:, 1], color="#9be7ff", lw=lw * s, alpha=a, solid_capstyle="round")
+        ax.plot(
+            path[:, 0],
+            path[:, 1],
+            color="#9be7ff",
+            lw=lw * s,
+            alpha=a,
+            solid_capstyle="round",
+        )
     ex, ey = path[-1]
     for sz, a in [(520, 0.06), (240, 0.12), (110, 0.30)]:
-        ax.scatter([ex], [ey], s=sz * s * s, color="#9be7ff", alpha=a, edgecolors="none", zorder=6)
+        ax.scatter(
+            [ex],
+            [ey],
+            s=sz * s * s,
+            color="#9be7ff",
+            alpha=a,
+            edgecolors="none",
+            zorder=6,
+        )
     ax.scatter([ex], [ey], s=46 * s * s, color="white", edgecolors="none", zorder=7)
     ax.set_xlim(0, GRID - 1)
     ax.set_ylim(0, GRID - 1)

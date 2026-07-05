@@ -30,8 +30,13 @@ def lorenz(s):
 def aizawa(s):
     x, y, z = s
     a, b, c, d, e, f = 0.95, 0.7, 0.6, 3.5, 0.25, 0.1
-    return np.array([(z - b) * x - d * y, d * x + (z - b) * y,
-                     c + a * z - z**3 / 3 - (x**2 + y**2) * (1 + e * z) + f * z * x**3])
+    return np.array(
+        [
+            (z - b) * x - d * y,
+            d * x + (z - b) * y,
+            c + a * z - z**3 / 3 - (x**2 + y**2) * (1 + e * z) + f * z * x**3,
+        ]
+    )
 
 
 def thomas(s):
@@ -43,8 +48,13 @@ def thomas(s):
 def halvorsen(s):
     x, y, z = s
     a = 1.4
-    return np.array([-a * x - 4 * y - 4 * z - y**2, -a * y - 4 * z - 4 * x - z**2,
-                     -a * z - 4 * x - 4 * y - x**2])
+    return np.array(
+        [
+            -a * x - 4 * y - 4 * z - y**2,
+            -a * y - 4 * z - 4 * x - z**2,
+            -a * z - 4 * x - 4 * y - x**2,
+        ]
+    )
 
 
 ATTRACTORS = {  # deriv, dt, steps, initial condition, projection axes
@@ -55,14 +65,21 @@ ATTRACTORS = {  # deriv, dt, steps, initial condition, projection axes
 }
 
 C = {
-    "cyan": ["#0b2545", "#3aa0ff", "#9be7ff"], "magenta": ["#3a0826", "#ff2d95", "#ff8fce"],
-    "teal": ["#02110d", "#0fbf8f", "#aeffe6"], "violet": ["#1a0938", "#7b2ff7", "#d6b8ff"],
-    "gold": ["#2a1c02", "#ffae00", "#ffe9a8"], "ember": ["#2a0606", "#ff5a36", "#ffd0a8"],
-    "ice": ["#06122a", "#1b8fd0", "#cdf3ff"], "pink": ["#2a0820", "#ff5ca8", "#ffd6f2"],
+    "cyan": ["#0b2545", "#3aa0ff", "#9be7ff"],
+    "magenta": ["#3a0826", "#ff2d95", "#ff8fce"],
+    "teal": ["#02110d", "#0fbf8f", "#aeffe6"],
+    "violet": ["#1a0938", "#7b2ff7", "#d6b8ff"],
+    "gold": ["#2a1c02", "#ffae00", "#ffe9a8"],
+    "ember": ["#2a0606", "#ff5a36", "#ffd0a8"],
+    "ice": ["#06122a", "#1b8fd0", "#cdf3ff"],
+    "pink": ["#2a0820", "#ff5ca8", "#ffd6f2"],
 }
 SCHEMES = {
-    "ice_fire": ("cyan", "magenta"), "aurora": ("teal", "violet"),
-    "gold_ice": ("gold", "ice"), "ember_ice": ("ember", "cyan"), "pink_teal": ("pink", "teal"),
+    "ice_fire": ("cyan", "magenta"),
+    "aurora": ("teal", "violet"),
+    "gold_ice": ("gold", "ice"),
+    "ember_ice": ("ember", "cyan"),
+    "pink_teal": ("pink", "teal"),
 }
 
 
@@ -86,7 +103,9 @@ def glow(ax, x, y, cmap, lw):
     for width, a in [(6, 0.035), (3, 0.09), (1.3, 0.38), (0.6, 0.62)]:
         col = base.copy()
         col[:, 3] = a
-        ax.add_collection(LineCollection(segs, colors=col, linewidths=width * lw, capstyle="round"))
+        ax.add_collection(
+            LineCollection(segs, colors=col, linewidths=width * lw, capstyle="round")
+        )
 
 
 def main():

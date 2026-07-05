@@ -57,7 +57,9 @@ def embedding_galaxy():
     X = X - X.mean(0)
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
     P = X @ Vt[:3].T  # top-3 principal components
-    cmap = LinearSegmentedColormap.from_list("g", ["#3aa0ff", "#9b5cff", "#ff5ca8", "#ffd86b"])
+    cmap = LinearSegmentedColormap.from_list(
+        "g", ["#3aa0ff", "#9b5cff", "#ff5ca8", "#ffd86b"]
+    )
     c = (P[:, 2] - P[:, 2].min()) / (np.ptp(P[:, 2]) + 1e-9)
 
     fig, ax = fig_ax()
@@ -109,7 +111,9 @@ def forking_tree():
         return y
 
     assign(0)
-    cmap = LinearSegmentedColormap.from_list("t", ["#1b3a6b", "#3aa0ff", "#9be7ff", "#ffffff"])
+    cmap = LinearSegmentedColormap.from_list(
+        "t", ["#1b3a6b", "#3aa0ff", "#9be7ff", "#ffffff"]
+    )
 
     fig, ax = fig_ax()
     th = np.linspace(0, 1, 40)
@@ -178,7 +182,9 @@ def positional_interference():
     i = np.arange(d)[None, :]
     angle = pos / np.power(10000, (2 * (i // 2)) / d)
     pe = np.where(i % 2 == 0, np.sin(angle), np.cos(angle))
-    cmap = LinearSegmentedColormap.from_list("p", ["#0b1f3a", "#3a0ca3", "#f72585", "#ffd60a"])
+    cmap = LinearSegmentedColormap.from_list(
+        "p", ["#0b1f3a", "#3a0ca3", "#f72585", "#ffd60a"]
+    )
 
     fig, ax = fig_ax()
     ax.imshow(pe.T, aspect="auto", cmap=cmap, interpolation="bilinear")

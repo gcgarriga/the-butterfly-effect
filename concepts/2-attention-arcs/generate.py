@@ -48,9 +48,14 @@ def attention_delta():
         torch.manual_seed(seed)
         ids = tok(PROMPT, return_tensors="pt").input_ids
         with torch.no_grad():
-            gen = model.generate(ids, do_sample=True, temperature=TEMP,
-                                 min_new_tokens=N_NEW, max_new_tokens=N_NEW,
-                                 pad_token_id=tok.eos_token_id)
+            gen = model.generate(
+                ids,
+                do_sample=True,
+                temperature=TEMP,
+                min_new_tokens=N_NEW,
+                max_new_tokens=N_NEW,
+                pad_token_id=tok.eos_token_id,
+            )
             out = model(gen, output_attentions=True)
         return np.stack([a[0].mean(0).numpy() for a in out.attentions])
 
@@ -86,9 +91,28 @@ def main():
         cx, r = (i + j) / 2, (i - j) / 2
         x, y = cx + r * np.cos(theta), r * np.sin(theta)
         col = cmap(0.25 + 0.75 * t)
-        for width, a in [(18, 0.05 * t), (10, 0.10 * t), (5.5, 0.25 * t), (2.8, 0.45 + 0.4 * t)]:
-            ax.plot(x, y, color=col, lw=width * lw, alpha=min(a, 1.0), solid_capstyle="round")
-        ax.plot(x, y, color="white", lw=1.1 * lw, alpha=min(0.5 + 0.5 * t, 1.0), solid_capstyle="round")
+        for width, a in [
+            (18, 0.05 * t),
+            (10, 0.10 * t),
+            (5.5, 0.25 * t),
+            (2.8, 0.45 + 0.4 * t),
+        ]:
+            ax.plot(
+                x,
+                y,
+                color=col,
+                lw=width * lw,
+                alpha=min(a, 1.0),
+                solid_capstyle="round",
+            )
+        ax.plot(
+            x,
+            y,
+            color="white",
+            lw=1.1 * lw,
+            alpha=min(0.5 + 0.5 * t, 1.0),
+            solid_capstyle="round",
+        )
 
     max_r = max((i - j) / 2 for i, j, _ in links)
     ax.set_xlim(-1, seq)

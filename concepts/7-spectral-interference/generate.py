@@ -82,7 +82,9 @@ def _vignette(ax, X, Y, cap=0.5, start=0.72):
     r = np.sqrt(gx**2 + (gy * 0.55) ** 2)
     rgba = np.zeros((ny, nx, 4))
     rgba[..., 3] = np.clip((r - start) * 2.0, 0, cap)
-    ax.imshow(rgba, extent=(X.min(), X.max(), Y.min(), Y.max()), aspect="auto", zorder=5)
+    ax.imshow(
+        rgba, extent=(X.min(), X.max(), Y.min(), Y.max()), aspect="auto", zorder=5
+    )
 
 
 def draw(ax, X, Y, Z, cmap, style, lw):
@@ -95,7 +97,9 @@ def draw(ax, X, Y, Z, cmap, style, lw):
         strokes = [(5.0, 0.05), (2.4, 0.12), (0.7, 1.0)]
         levels = 50
     for width, a in strokes:
-        ax.contour(X, Y, Z, levels=levels, cmap=cmap, linewidths=width * lw, alpha=a, zorder=1)
+        ax.contour(
+            X, Y, Z, levels=levels, cmap=cmap, linewidths=width * lw, alpha=a, zorder=1
+        )
     _vignette(ax, X, Y)
     ax.set_xlim(X.min(), X.max())
     ax.set_ylim(Y.min(), Y.max())

@@ -54,7 +54,10 @@ def test_generator_runs(concept, tmp_path):
     out = tmp_path / f"{concept}.png"
     result = subprocess.run(
         [sys.executable, str(script), "--size", "240x160", "--out", str(out)],
-        capture_output=True, text=True, timeout=600, env=ENV,
+        capture_output=True,
+        text=True,
+        timeout=600,
+        env=ENV,
     )
     assert result.returncode == 0, f"{concept} failed:\n{result.stderr[-1000:]}"
     assert out.exists(), f"{concept} produced no output"
@@ -62,13 +65,19 @@ def test_generator_runs(concept, tmp_path):
 
 
 @pytest.mark.model
-@pytest.mark.skipif(os.environ.get("RUN_MODEL_TESTS") != "1",
-                    reason="downloads GPT-2; set RUN_MODEL_TESTS=1 to run")
+@pytest.mark.skipif(
+    os.environ.get("RUN_MODEL_TESTS") != "1",
+    reason="downloads GPT-2; set RUN_MODEL_TESTS=1 to run",
+)
 def test_exploration_sketches(tmp_path):
     script = ROOT / "concepts" / "3-exploration-sketches" / "generate.py"
     result = subprocess.run(
-        [sys.executable, str(script)], cwd=tmp_path,
-        capture_output=True, text=True, timeout=1800, env=ENV,
+        [sys.executable, str(script)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        timeout=1800,
+        env=ENV,
     )
     assert result.returncode == 0, result.stderr[-1000:]
     assert len(list(tmp_path.glob("concept_*.png"))) == 4
