@@ -24,8 +24,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 from common import presets  # noqa: E402
 
 BG = "#04060d"
-DEFAULT_TEXT = ("The mind is a pattern of patterns, a wave folding back on itself; "
-                "every thought echoes another thought, every echo a thought again.")
+DEFAULT_TEXT = (
+    "The mind is a pattern of patterns, a wave folding back on itself; "
+    "every thought echoes another thought, every echo a thought again."
+)
 PALETTES = ["magma", "inferno", "ice", "aurora", "viridis"]
 CUSTOM = {
     "ice": ["#02030a", "#0b2545", "#1b6ca8", "#5fd3f3", "#ffffff"],
@@ -59,12 +61,19 @@ def load(text):
 def main():
     p = presets.base_parser(__doc__)
     p.add_argument("--palette", default="magma", choices=PALETTES)
-    p.add_argument("--gamma", type=float, default=0.7, help="contrast; <1 lifts faint attention")
+    p.add_argument(
+        "--gamma", type=float, default=0.7, help="contrast; <1 lifts faint attention"
+    )
     p.add_argument("--text", default=DEFAULT_TEXT)
     args = p.parse_args()
 
     from matplotlib.colors import LinearSegmentedColormap as LSC
-    cmap = LSC.from_list(args.palette, CUSTOM[args.palette]) if args.palette in CUSTOM else args.palette
+
+    cmap = (
+        LSC.from_list(args.palette, CUSTOM[args.palette])
+        if args.palette in CUSTOM
+        else args.palette
+    )
 
     attn = load(args.text)
     n_layer, n_head = attn.shape[:2]
@@ -74,8 +83,14 @@ def main():
     g = 0.006
     for L in range(n_layer):
         for H in range(n_head):
-            ax = fig.add_axes([H / n_head + g, (n_layer - 1 - L) / n_layer + g,
-                               1 / n_head - 2 * g, 1 / n_layer - 2 * g])
+            ax = fig.add_axes(
+                [
+                    H / n_head + g,
+                    (n_layer - 1 - L) / n_layer + g,
+                    1 / n_head - 2 * g,
+                    1 / n_layer - 2 * g,
+                ]
+            )
             ax.imshow(attn[L, H] ** args.gamma, cmap=cmap, interpolation="nearest")
             ax.set_facecolor(BG)
             ax.axis("off")
