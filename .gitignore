@@ -21,3 +21,6 @@ Thumbs.db
 
 # Hugging Face / model caches (models are downloaded on demand)
 .cache/
+
+# Scratch prototype area (not part of the repo)
+explore/

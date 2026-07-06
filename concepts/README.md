@@ -14,6 +14,7 @@ sizing details.
 | 5 | [chladni-eigenmodes](5-chladni-eigenmodes) | vibrating-plate nodal patterns from the spectrum |
 | 6 | [strange-attractor](6-strange-attractor) | Lorenz & friends — the literal butterfly effect (procedural) |
 | 7 | [embedding-constellation](7-embedding-constellation) | k-NN graph of token embeddings — the "shape of language" |
+| 8 | [forking-paths-tree](8-forking-paths-tree) | the branching tree of possible next-token continuations |
 
 Run any concept the same way:
 

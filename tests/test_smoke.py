@@ -24,6 +24,7 @@ CONCEPTS = [
     "5-chladni-eigenmodes",
     "6-strange-attractor",
     "7-embedding-constellation",
+    "8-forking-paths-tree",
 ]
 
 ENV = {**os.environ, "MPLBACKEND": "Agg", "HF_HUB_DISABLE_PROGRESS_BARS": "1"}
