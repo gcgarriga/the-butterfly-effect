@@ -15,6 +15,7 @@ sizing details.
 | 6 | [strange-attractor](6-strange-attractor) | Lorenz & friends — the literal butterfly effect (procedural) |
 | 7 | [embedding-constellation](7-embedding-constellation) | k-NN graph of token embeddings — the "shape of language" |
 | 8 | [forking-paths-tree](8-forking-paths-tree) | the branching tree of possible next-token continuations |
+| 9 | [attention-head-atlas](9-attention-head-atlas) | all 144 attention heads as a 12×12 map of the model's routing |
 
 Run any concept the same way:
 
