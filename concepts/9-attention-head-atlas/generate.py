@@ -58,7 +58,7 @@ def load(text):
 
 def main():
     p = presets.base_parser(__doc__)
-    p.add_argument("--palette", default="magma")
+    p.add_argument("--palette", default="magma", choices=PALETTES)
     p.add_argument("--gamma", type=float, default=0.7, help="contrast; <1 lifts faint attention")
     p.add_argument("--text", default=DEFAULT_TEXT)
     args = p.parse_args()
