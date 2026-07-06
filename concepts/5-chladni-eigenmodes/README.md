@@ -11,8 +11,8 @@ frequencies decide which plate modes ring loudest.
 We render the *nodal band* (a glowing Gaussian around `Z = 0`), giving luminous
 electric veins on black.
 
-**What it represents:** the same learned spectrum as concept 7, but excited as plate
-resonances instead of travelling waves — structured, netted, organic.
+**What it represents:** the same learned spectrum as concept 4 (spectral interference),
+but excited as plate resonances instead of travelling waves — structured, netted, organic.
 
 ## Usage
 
