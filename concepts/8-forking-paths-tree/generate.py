@@ -116,7 +116,7 @@ def draw(ax, parent, depth, y, prob, cmap, lw):
         xs = depth[p] + (depth[i] - depth[p]) * th
         ys = y[p] + (y[i] - y[p]) * smooth
         col = cmap(0.15 + 0.85 * depth[i] / maxd)  # brighten outward with depth
-        for width, a in [(6, 0.05), (2.6, 0.14), (1.1, 0.85)]:
+        for width, a in [(11, 0.05), (5.0, 0.14), (2.2, 0.9)]:
             ax.plot(xs, ys, color=col, lw=width * lw, alpha=a, solid_capstyle="round")
     ax.set_xlim(-0.3, maxd + 0.3)
     ax.set_ylim(y.min() - 1, y.max() + 1)
