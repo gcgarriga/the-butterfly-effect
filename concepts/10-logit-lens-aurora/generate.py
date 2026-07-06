@@ -82,7 +82,9 @@ def main():
     p = presets.base_parser(__doc__)
     p.add_argument("--palette", default="glow", choices=list(PALETTES))
     p.add_argument("--prompt", default=DEFAULT_PROMPT)
-    p.add_argument("--top", type=int, default=DEFAULT_TOP, help="tokens per layer ridgeline")
+    p.add_argument(
+        "--top", type=int, default=DEFAULT_TOP, help="tokens per layer ridgeline"
+    )
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
