@@ -16,6 +16,7 @@ sizing details.
 | 7 | [embedding-constellation](7-embedding-constellation) | k-NN graph of token embeddings — the "shape of language" |
 | 8 | [forking-paths-tree](8-forking-paths-tree) | the branching tree of possible next-token continuations |
 | 9 | [attention-head-atlas](9-attention-head-atlas) | all 144 attention heads as a 12×12 map of the model's routing |
+| 10 | [logit-lens-aurora](10-logit-lens-aurora) | how the prediction sharpens layer by layer (logit lens) |
 
 Run any concept the same way:
 
