@@ -28,7 +28,8 @@ python generate.py --size banner --seed 4 --palette abyss
 
 - `--seed` — a different pair of directions (`0`–`5` precomputed, others compute on
   demand and cache). `--palette` — `magma`, `inferno`, `viridis`, `abyss`, `ember`,
-  `twilight`. `--size`, `--out`.
+  `twilight`. `--no-descent` — hide the gradient-descent trajectory (terrain only).
+  `--size`, `--out`.
 - Computing a new seed needs `torch`/`transformers` and a few minutes (MPS/CUDA
   recommended); precomputed grids are shipped as `landscape_s{0..5}_g81.npy`.
 

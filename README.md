@@ -15,7 +15,7 @@ header**. Nothing is a stock gradient: the structure comes from what the model l
 |  |  |
 |---|---|
 | ![chladni](concepts/5-chladni-eigenmodes/gallery/ice_2k.png) | ![forking-paths tree](concepts/8-forking-paths-tree/gallery/glow_2k.png) |
-| ![constellation](concepts/7-embedding-constellation/gallery/turbo_2k.png) | ![strange attractor](concepts/6-strange-attractor/gallery/aizawa_aurora_2k.png) |
+| ![constellation](concepts/7-embedding-constellation/gallery/turbo_2k.png) | ![loss landscape](concepts/3-loss-landscape/gallery/magma_no_descent_2k.png) |
 
 ## Concepts
 
