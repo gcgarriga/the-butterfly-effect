@@ -1,0 +1,44 @@
+name: New concept proposal
+description: Propose a new concept / visualization derived from a model internal.
+title: "[concept]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a new concept! Each concept lives in
+        `concepts/<n>-<name>/` and turns a model internal into abstract art.
+  - type: input
+    id: source
+    attributes:
+      label: Which model internal does it derive from?
+      description: e.g. attention, activations, weights (SVD), embeddings, logit lens, or procedural.
+      placeholder: attention (or weights via SVD, embeddings, ...)
+    validations:
+      required: true
+  - type: textarea
+    id: visualizes
+    attributes:
+      label: What does it visualize?
+      description: What structure or phenomenon the image represents.
+      placeholder: e.g. how attention entropy changes across layers, shown as ...
+    validations:
+      required: true
+  - type: textarea
+    id: technique
+    attributes:
+      label: Sketch of the technique
+      description: How you'd compute and render it (data source, transform, how it maps to the image).
+      placeholder: |
+        1. Pull <array> from GPT-2 and cache it to a small .npy.
+        2. Transform via <method>.
+        3. Render as <fields / lines / points> honoring --size / --out / --dpi.
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: References, prior art, palette ideas, or a rough sketch.
+    validations:
+      required: false

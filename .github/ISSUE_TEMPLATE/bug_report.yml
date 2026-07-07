@@ -1,0 +1,47 @@
+name: Bug report
+description: Report something that renders wrong, crashes, or behaves unexpectedly.
+title: "[bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug! Please include the exact command and your environment
+        so it can be reproduced offline.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the problem.
+      placeholder: The generator crashed / produced a wrong-sized or empty image / ...
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command run
+      description: The full command, including the concept folder and all flags.
+      placeholder: |
+        cd concepts/4-spectral-interference
+        python generate.py --size 2560x1440 --palette steel --seed 5
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS and Python version
+      description: e.g. macOS 14 / Python 3.11
+      placeholder: macOS 14 · Python 3.11
+    validations:
+      required: true
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Expected vs actual
+      description: What you expected to happen, and what actually happened (include any traceback).
+      placeholder: |
+        Expected: a 2560x1440 PNG in the current folder.
+        Actual: ValueError traceback (paste it here).
+    validations:
+      required: true
