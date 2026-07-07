@@ -6,8 +6,8 @@ depth. We take that distribution's sorted top probabilities per layer and stack 
 glowing ridgelines: early layers are flat and uncertain, deeper layers spike as the
 prediction sharpens — the model committing to an answer as depth increases.
 
-The default is cached (`logit_lens.npy`) so it renders offline; a different --prompt
-recomputes from GPT-2 (downloaded on demand). --palette/--top/--size never recompute.
+The default is cached (`logit_lens.npy`) so it renders offline; a different --prompt or --top
+recomputes from GPT-2 (downloaded on demand). --palette/--size never recompute.
 
 Examples:
     python generate.py --size wallpaper_4k --palette glow
