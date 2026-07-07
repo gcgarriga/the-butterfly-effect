@@ -17,14 +17,13 @@ Examples:
 import os
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC, PowerNorm
+from matplotlib.colors import PowerNorm
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#000000"
+BG = "#000000"  # intentionally pure black (not the family presets.DEFAULT_BG)
 PROMPT = "The fundamental nature of chaos and reality is"
 N_NEW, TEMP, SEED_A, SEED_B = 30, 1.5, 42, 1337
 
@@ -35,10 +34,15 @@ PALETTES = {
     "viridis": "viridis",
     "plasma": "plasma",
     "twilight": "twilight_shifted",
-    "butterfly": LSC.from_list(
-        "butterfly",
-        ["#08001f", "#3a0ca3", "#7209b7", "#b5179e", "#f72585", "#ff8800", "#ffd60a"],
-    ),
+    "butterfly": [
+        "#08001f",
+        "#3a0ca3",
+        "#7209b7",
+        "#b5179e",
+        "#f72585",
+        "#ff8800",
+        "#ffd60a",
+    ],
 }
 
 
@@ -86,8 +90,7 @@ def main():
     args = p.parse_args()
 
     delta = compute_delta()
-    cmap = PALETTES[args.palette]
-    cmap = plt.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    cmap = style.resolve_cmap(PALETTES[args.palette])
     w, h = presets.resolve(args.size)
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
 

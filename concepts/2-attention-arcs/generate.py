@@ -15,19 +15,19 @@ import os
 import sys
 
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 PROMPT = "The fundamental nature of chaos and reality is"
 N_NEW, TEMP, SEED_A, SEED_B, KEEP_PCT = 30, 1.5, 42, 1337, 97.0
 
 PALETTES = {
+    # concept-local "ice" differs from the shared style.PALETTES["ice"] ramp
     "ice": ["#1b3a6b", "#3aa0ff", "#9be7ff", "#ffffff"],
-    "gold": ["#2a1c02", "#b8860b", "#ffd60a", "#fffbe6"],
-    "violet": ["#241046", "#7b2ff7", "#c77dff", "#ffffff"],
+    "gold": style.PALETTES["gold"],
+    "violet": style.PALETTES["violet"],
     "emerald": ["#06302a", "#0fbf8f", "#7cf9c8", "#ffffff"],
     "magenta": ["#3a0826", "#ff2d95", "#ff8fce", "#ffffff"],
 }
@@ -81,8 +81,8 @@ def main():
     smax = strength[mask].max()
 
     w, h = presets.resolve(args.size)
-    lw = (w**2 + h**2) ** 0.5 / 1632
-    cmap = LSC.from_list(args.palette, PALETTES[args.palette])
+    lw = style.line_scale(w, h)
+    cmap = style.resolve_cmap(PALETTES[args.palette])
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
 
     theta = np.linspace(0, np.pi, 200)

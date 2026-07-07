@@ -18,19 +18,18 @@ import os
 import sys
 
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 DEFAULT_PROMPT = "The future of artificial intelligence will"
 DEFAULT_TOP = 30
 PALETTES = {
-    "glow": ["#1b3a6b", "#3aa0ff", "#9be7ff", "#ffffff"],
-    "ember": ["#2a0606", "#ff5a36", "#ffae00", "#fffaf0"],
-    "aurora": ["#02110d", "#0fbf8f", "#3aa0ff", "#9b5cff", "#eafff7"],
-    "violet": ["#241046", "#7b2ff7", "#c77dff", "#ffffff"],
+    "glow": style.PALETTES["glow"],
+    "ember": style.PALETTES["ember"],
+    "aurora": style.PALETTES["aurora"],
+    "violet": style.PALETTES["violet"],
 }
 
 
@@ -88,8 +87,8 @@ def main():
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
-    lw = (w**2 + h**2) ** 0.5 / 1632
-    cmap = LSC.from_list(args.palette, PALETTES[args.palette])
+    lw = style.line_scale(w, h)
+    cmap = style.resolve_cmap(PALETTES[args.palette])
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
     draw(ax, load(args.prompt, args.top), cmap, lw)
     out = args.out or f"logit_lens_{args.palette}_{w}x{h}.png"

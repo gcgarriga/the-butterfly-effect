@@ -14,16 +14,15 @@ import os
 import sys
 
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 
 PALETTES = {
-    "ice": ["#06122a", "#0b3a6b", "#1b8fd0", "#5fd3f3", "#ffffff"],
-    "aurora": ["#02110d", "#0fbf8f", "#3aa0ff", "#9b5cff", "#eafff7"],
+    "ice": style.PALETTES["ice"],
+    "aurora": style.PALETTES["aurora"],
     "magma": ["#06010a", "#3a0ca3", "#b5179e", "#ff8800", "#ffe08a"],
     "ultraviolet": ["#05030f", "#3a0ca3", "#7b2ff7", "#ff2d95", "#ffd6f2"],
     "ember": ["#0a0402", "#7a1f0a", "#ff5a36", "#ffae00", "#fff0d0"],
@@ -83,9 +82,7 @@ def main():
 
     w, h = presets.resolve(args.size)
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
-    draw(
-        ax, field(args.seed, w, h), LSC.from_list(args.palette, PALETTES[args.palette])
-    )
+    draw(ax, field(args.seed, w, h), style.resolve_cmap(PALETTES[args.palette]))
     out = args.out or f"chladni_{args.palette}_s{args.seed}_{w}x{h}.png"
     fig.savefig(out, dpi=args.dpi, facecolor=BG)
     print("saved", out)
