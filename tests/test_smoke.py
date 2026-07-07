@@ -26,6 +26,7 @@ CONCEPTS = [
     "7-embedding-constellation",
     "8-forking-paths-tree",
     "9-attention-head-atlas",
+    "10-logit-lens-aurora",
 ]
 
 ENV = {**os.environ, "MPLBACKEND": "Agg", "HF_HUB_DISABLE_PROGRESS_BARS": "1"}

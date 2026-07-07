@@ -31,6 +31,7 @@ Each lives in its own folder under [`concepts/`](concepts) with a `generate.py`,
 | 7 | [embedding-constellation](concepts/7-embedding-constellation) | embeddings | k-NN graph of token embeddings — the "shape of language" |
 | 8 | [forking-paths-tree](concepts/8-forking-paths-tree) | decoding | the branching tree of possible next-token continuations |
 | 9 | [attention-head-atlas](concepts/9-attention-head-atlas) | attention | all 144 attention heads as a 12×12 map of the model's routing |
+| 10 | [logit-lens-aurora](concepts/10-logit-lens-aurora) | logit lens | how the prediction sharpens layer by layer |
 
 Every concept derives from real GPT-2 data except the strange attractor (pure
 procedural chaos). Small precomputed caches are shipped, so all concepts render
