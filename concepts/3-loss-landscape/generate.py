@@ -104,33 +104,34 @@ def descent_path(Z, steps=320):
     return _smooth(np.array(pts + [(mx, my)]))
 
 
-def draw(ax, Z, cmap, s):
+def draw(ax, Z, cmap, s, descent=True):
     ax.set_facecolor(BG)
     Zc = np.log(Z)  # loss spans ~3..150; log reveals the basin's rings
     ax.contourf(Zc, levels=44, cmap=cmap)
     ax.contour(Zc, levels=22, colors="white", linewidths=0.22 * s, alpha=0.16)
-    path = descent_path(Z)
-    for lw, a in [(9, 0.10), (5, 0.20), (2.4, 0.45), (1.1, 0.97)]:
-        ax.plot(
-            path[:, 0],
-            path[:, 1],
-            color="#9be7ff",
-            lw=lw * s,
-            alpha=a,
-            solid_capstyle="round",
-        )
-    ex, ey = path[-1]
-    for sz, a in [(520, 0.06), (240, 0.12), (110, 0.30)]:
-        ax.scatter(
-            [ex],
-            [ey],
-            s=sz * s * s,
-            color="#9be7ff",
-            alpha=a,
-            edgecolors="none",
-            zorder=6,
-        )
-    ax.scatter([ex], [ey], s=46 * s * s, color="white", edgecolors="none", zorder=7)
+    if descent:  # the glowing gradient-descent trajectory diving into the minimum
+        path = descent_path(Z)
+        for lw, a in [(9, 0.10), (5, 0.20), (2.4, 0.45), (1.1, 0.97)]:
+            ax.plot(
+                path[:, 0],
+                path[:, 1],
+                color="#9be7ff",
+                lw=lw * s,
+                alpha=a,
+                solid_capstyle="round",
+            )
+        ex, ey = path[-1]
+        for sz, a in [(520, 0.06), (240, 0.12), (110, 0.30)]:
+            ax.scatter(
+                [ex],
+                [ey],
+                s=sz * s * s,
+                color="#9be7ff",
+                alpha=a,
+                edgecolors="none",
+                zorder=6,
+            )
+        ax.scatter([ex], [ey], s=46 * s * s, color="white", edgecolors="none", zorder=7)
     ax.set_xlim(0, GRID - 1)
     ax.set_ylim(0, GRID - 1)
     ax.axis("off")
@@ -140,12 +141,23 @@ def main():
     p = presets.base_parser(__doc__)
     p.add_argument("--palette", default="magma", choices=list(PALETTES))
     p.add_argument("--seed", type=int, default=4)
+    p.add_argument(
+        "--no-descent",
+        action="store_true",
+        help="hide the gradient-descent trajectory (terrain only)",
+    )
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
     cmap = style.resolve_cmap(PALETTES[args.palette])
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
-    draw(ax, compute_terrain(args.seed), cmap, style.line_scale(w, h))
+    draw(
+        ax,
+        compute_terrain(args.seed),
+        cmap,
+        style.line_scale(w, h),
+        descent=not args.no_descent,
+    )
     out = args.out or f"landscape_{args.palette}_s{args.seed}_{w}x{h}.png"
     fig.savefig(out, dpi=args.dpi, facecolor=BG)
     print("saved", out)
