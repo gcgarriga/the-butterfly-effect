@@ -2,7 +2,17 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+# Least privilege: CI only needs to read the repo.
+permissions:
+  contents: read
+
+# Cancel superseded runs for the same ref (e.g. rapid pushes to a PR).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -18,11 +28,16 @@ jobs:
 
   smoke:
     # Runs offline from the shipped caches — no GPT-2 download, no torch needed.
+    # Matrix covers the Python versions declared in pyproject (>=3.10).
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
       - run: pip install numpy matplotlib pillow pytest
       - run: pytest -v
