@@ -24,16 +24,56 @@ DEFAULT_SIZE = "wallpaper_4k"
 DEFAULT_BG = "#04060d"
 
 
-def resolve(size: str) -> tuple[int, int]:
-    """Accept a preset name or a 'WIDTHxHEIGHT' string -> (width, height) in px."""
+def _size_error(size: object) -> str:
+    return (
+        f"invalid size {size!r}; use a preset {list(SIZES)} "
+        "or a positive WIDTHxHEIGHT, e.g. 2560x1440"
+    )
+
+
+def _positive_wh(w: object, h: object, original: object) -> tuple[int, int]:
+    """Coerce (w, h) to positive ints or raise ValueError with the standard message."""
+    try:
+        w, h = int(w), int(h)
+    except (TypeError, ValueError):
+        raise ValueError(_size_error(original)) from None
+    if w <= 0 or h <= 0:
+        raise ValueError(_size_error(original))
+    return w, h
+
+
+def resolve(size) -> tuple[int, int]:
+    """Preset name, 'WIDTHxHEIGHT' string, or (w, h) pair -> validated (width, height) px.
+
+    Idempotent for tuples/lists: ``resolve((w, h))`` validates and returns ``(w, h)``,
+    so ``resolve(resolve(x)) == resolve(x)``. This lets the CLI pre-convert ``--size``
+    to a validated tuple (see ``_size_arg``) while generators keep calling
+    ``presets.resolve(args.size)`` unchanged.
+    """
+    if isinstance(size, (tuple, list)):
+        if len(size) != 2:
+            raise ValueError(_size_error(size))
+        return _positive_wh(size[0], size[1], size)
     if size in SIZES:
         return SIZES[size]
-    if "x" in size.lower():
-        w, h = size.lower().split("x")
-        return int(w), int(h)
-    raise ValueError(
-        f"Unknown size {size!r}; use a preset {list(SIZES)} or WxH, e.g. 2560x1440"
-    )
+    if isinstance(size, str) and "x" in size.lower():
+        parts = size.lower().split("x")
+        if len(parts) != 2 or not all(parts):
+            raise ValueError(_size_error(size))
+        return _positive_wh(parts[0], parts[1], size)
+    raise ValueError(_size_error(size))
+
+
+def _size_arg(s: str) -> tuple[int, int]:
+    """argparse ``type`` for --size: parse the value, surfacing a clean CLI error.
+
+    Converting ValueError into ArgumentTypeError makes bad input exit 2 with an
+    ``error: argument --size: ...`` message instead of leaking a traceback.
+    """
+    try:
+        return resolve(s)
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(str(e)) from None
 
 
 def aspect(w: int, h: int) -> float:
@@ -55,6 +95,7 @@ def base_parser(description: str) -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description=description)
     p.add_argument(
         "--size",
+        type=_size_arg,
         default=DEFAULT_SIZE,
         help=f"preset {list(SIZES)} or WIDTHxHEIGHT (default: {DEFAULT_SIZE})",
     )
