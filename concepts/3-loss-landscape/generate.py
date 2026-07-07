@@ -14,14 +14,12 @@ Examples:
 import os
 import sys
 
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 GRID, RANGE = 81, 1.0
 EVAL_TEXT = (
     "The history of artificial intelligence is a story of ambition and breakthroughs."
@@ -31,12 +29,8 @@ PALETTES = {
     "magma": "magma",
     "inferno": "inferno",
     "viridis": "viridis",
-    "abyss": LSC.from_list(
-        "abyss", ["#05030f", "#1b1450", "#7209b7", "#f72585", "#ff8800", "#ffe08a"]
-    ),
-    "ember": LSC.from_list(
-        "ember", ["#06010a", "#3a0606", "#c81d25", "#ff7b00", "#ffe08a", "#fffaf0"]
-    ),
+    "abyss": ["#05030f", "#1b1450", "#7209b7", "#f72585", "#ff8800", "#ffe08a"],
+    "ember": ["#06010a", "#3a0606", "#c81d25", "#ff7b00", "#ffe08a", "#fffaf0"],
     "twilight": "twilight_shifted",
 }
 
@@ -149,10 +143,9 @@ def main():
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
-    cmap = PALETTES[args.palette]
-    cmap = plt.get_cmap(cmap) if isinstance(cmap, str) else cmap
+    cmap = style.resolve_cmap(PALETTES[args.palette])
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
-    draw(ax, compute_terrain(args.seed), cmap, (w**2 + h**2) ** 0.5 / 1632)
+    draw(ax, compute_terrain(args.seed), cmap, style.line_scale(w, h))
     out = args.out or f"landscape_{args.palette}_s{args.seed}_{w}x{h}.png"
     fig.savefig(out, dpi=args.dpi, facecolor=BG)
     print("saved", out)

@@ -15,20 +15,20 @@ import sys
 
 import numpy as np
 from matplotlib.collections import LineCollection
-from matplotlib.colors import LinearSegmentedColormap as LSC
-import matplotlib.pyplot as plt
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 N, KNN, ITERS = 520, 4, 220
 
+# "ice"/"aurora"/"ember" here are concept-local ramps, distinct from the
+# shared style.PALETTES entries of the same names.
 PALETTES = {
-    "turbo": plt.get_cmap("turbo"),
-    "ice": LSC.from_list("ice", ["#0b3a6b", "#1b8fd0", "#5fd3f3", "#ffffff"]),
-    "aurora": LSC.from_list("aurora", ["#0fbf8f", "#3aa0ff", "#9b5cff", "#ff5ca8"]),
-    "ember": LSC.from_list("ember", ["#7a1f0a", "#ff5a36", "#ffae00", "#fff0d0"]),
+    "turbo": "turbo",
+    "ice": ["#0b3a6b", "#1b8fd0", "#5fd3f3", "#ffffff"],
+    "aurora": ["#0fbf8f", "#3aa0ff", "#9b5cff", "#ff5ca8"],
+    "ember": ["#7a1f0a", "#ff5a36", "#ffae00", "#fff0d0"],
 }
 
 
@@ -81,8 +81,8 @@ def main():
 
     w, h = presets.resolve(args.size)
     pos, edges, hue = build(args.seed)
-    cmap = PALETTES[args.palette]
-    s = (w**2 + h**2) ** 0.5 / 1632  # scale glyph sizes with output
+    cmap = style.resolve_cmap(PALETTES[args.palette])
+    s = style.line_scale(w, h)  # scale glyph sizes with output
 
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
     ecol = cmap(hue[edges].mean(1))

@@ -13,17 +13,16 @@ import os
 import sys
 
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap as LSC
 from PIL import Image
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 
 PALETTES = {
     # cool / mono / serious
-    "ice": ["#06122a", "#0b3a6b", "#1b8fd0", "#5fd3f3", "#ffffff"],
+    "ice": style.PALETTES["ice"],
     "steel": ["#05070d", "#17293c", "#3f6180", "#7fa8c8", "#cfe6f7", "#ffffff"],
     "graphite": ["#08090c", "#20262e", "#4a5561", "#8a99a6", "#dfe8ef", "#ffffff"],
     "ice_slate": ["#070d16", "#16324f", "#2f6f9e", "#7fb8e0", "#eaf5ff"],
@@ -130,8 +129,8 @@ def main():
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
-    cmap = LSC.from_list(args.palette, PALETTES[args.palette])
-    lw = (w**2 + h**2) ** 0.5 / 1632  # keep line weight proportional across sizes
+    cmap = style.resolve_cmap(PALETTES[args.palette])
+    lw = style.line_scale(w, h)  # keep line weight proportional across sizes
 
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
     draw(ax, *field(args.seed, w, h), cmap, args.style, lw)

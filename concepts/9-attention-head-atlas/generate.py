@@ -21,17 +21,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 DEFAULT_TEXT = (
     "The mind is a pattern of patterns, a wave folding back on itself; "
     "every thought echoes another thought, every echo a thought again."
 )
-PALETTES = ["magma", "inferno", "ice", "aurora", "viridis"]
-CUSTOM = {
+# concept-local "ice" differs from the shared style.PALETTES["ice"] ramp
+PALETTES = {
+    "magma": "magma",
+    "inferno": "inferno",
     "ice": ["#02030a", "#0b2545", "#1b6ca8", "#5fd3f3", "#ffffff"],
-    "aurora": ["#02110d", "#0fbf8f", "#3aa0ff", "#9b5cff", "#eafff7"],
+    "aurora": style.PALETTES["aurora"],
+    "viridis": "viridis",
 }
 
 
@@ -60,20 +63,14 @@ def load(text):
 
 def main():
     p = presets.base_parser(__doc__)
-    p.add_argument("--palette", default="magma", choices=PALETTES)
+    p.add_argument("--palette", default="magma", choices=list(PALETTES))
     p.add_argument(
         "--gamma", type=float, default=0.7, help="contrast; <1 lifts faint attention"
     )
     p.add_argument("--text", default=DEFAULT_TEXT)
     args = p.parse_args()
 
-    from matplotlib.colors import LinearSegmentedColormap as LSC
-
-    cmap = (
-        LSC.from_list(args.palette, CUSTOM[args.palette])
-        if args.palette in CUSTOM
-        else args.palette
-    )
+    cmap = style.resolve_cmap(PALETTES[args.palette])
 
     attn = load(args.text)
     n_layer, n_head = attn.shape[:2]

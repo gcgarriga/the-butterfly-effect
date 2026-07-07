@@ -14,12 +14,11 @@ import sys
 
 import numpy as np
 from matplotlib.collections import LineCollection
-from matplotlib.colors import LinearSegmentedColormap as LSC
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets  # noqa: E402
+from common import presets, style  # noqa: E402
 
-BG = "#04060d"
+BG = presets.DEFAULT_BG
 
 
 def lorenz(s):
@@ -115,9 +114,9 @@ def main():
     args = p.parse_args()
 
     w, h = presets.resolve(args.size)
-    lw = (w**2 + h**2) ** 0.5 / 1632
+    lw = style.line_scale(w, h)
     deriv, dt, steps, ic, (i0, i1) = ATTRACTORS[args.attractor]
-    cmaps = [LSC.from_list(n, C[n]) for n in SCHEMES[args.scheme]]
+    cmaps = [style.resolve_cmap(C[n]) for n in SCHEMES[args.scheme]]
 
     fig, ax = presets.new_fig(w, h, BG, args.dpi)
     allpts = []
