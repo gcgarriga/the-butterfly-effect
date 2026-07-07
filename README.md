@@ -1,5 +1,7 @@
 # The Butterfly Effect — generative backgrounds from AI-model internals
 
+[![CI](https://github.com/gcgarriga/the-butterfly-effect/actions/workflows/ci.yml/badge.svg)](https://github.com/gcgarriga/the-butterfly-effect/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Abstract, luminous background images generated from the **real internals of a language
 model** (GPT-2) — its weights, activations, attention, loss surface and embedding
 geometry — plus one nod to the chaos theory the project is named after.
@@ -108,5 +110,5 @@ The fast suite needs no model download, so it doubles as a check that the shippe
 
 ## License
 
-[MIT](LICENSE) — reuse the code and the generated images freely, including commercially.
-Attribution appreciated but not required.
+[MIT](LICENSE). The **code** is MIT-licensed. The **images you generate are yours** —
+reuse them freely, including commercially; attribution appreciated but not required.

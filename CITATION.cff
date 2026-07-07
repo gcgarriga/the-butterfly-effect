@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or its images, please cite it."
+title: "The Butterfly Effect"
+abstract: "Abstract, luminous background images generated from the real internals of GPT-2 — its weights, activations, attention, loss surface and embedding geometry."
+authors:
+  - family-names: Garriga
+    given-names: Gemma
+type: software
+license: MIT
+repository-code: "https://github.com/gcgarriga/the-butterfly-effect"
+url: "https://github.com/gcgarriga/the-butterfly-effect"
+keywords:
+  - generative-art
+  - gpt2
+  - interpretability
+  - wallpaper
+  - matplotlib
+date-released: "2026-01-01"
