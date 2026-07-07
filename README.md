@@ -29,6 +29,7 @@ Each lives in its own folder under [`concepts/`](concepts) with a `generate.py`,
 | 5 | [chladni-eigenmodes](concepts/5-chladni-eigenmodes) | weights (SVD) | vibrating-plate nodal patterns from the singular spectrum |
 | 6 | [strange-attractor](concepts/6-strange-attractor) | chaos theory | Lorenz & friends — the literal butterfly effect (procedural) |
 | 7 | [embedding-constellation](concepts/7-embedding-constellation) | embeddings | k-NN graph of token embeddings — the "shape of language" |
+| 8 | [forking-paths-tree](concepts/8-forking-paths-tree) | decoding | the branching tree of possible next-token continuations |
 
 Every concept derives from real GPT-2 data except the strange attractor (pure
 procedural chaos). Small precomputed caches are shipped, so all concepts render
@@ -45,8 +46,9 @@ pip install -r requirements.txt
 ```
 
 All concepts render offline immediately from the shipped caches (no model, no GPU).
-Only requesting a *new* `--seed` in a model-backed concept downloads GPT-2 (~500 MB,
-once) via `transformers`.
+Only requesting *new* generation parameters in a model-backed concept (a different
+`--seed`, or the forking tree's `--prompt`/`--temp`/…) downloads GPT-2 (~500 MB, once)
+via `transformers` to recompute.
 
 ## Generate
 
