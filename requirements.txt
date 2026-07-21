@@ -4,7 +4,7 @@
 # Floors install broadly; the transformers cap guards against a future major
 # dropping the GPT-2 classes this project relies on.
 torch>=2.12.1
-transformers>=5.13.0,<6
+transformers>=5.14.1,<6
 numpy>=2.2.6
 matplotlib>=3.10.9
 pillow>=12.3.0
