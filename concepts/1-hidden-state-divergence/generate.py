@@ -21,7 +21,7 @@ import numpy as np
 from matplotlib.colors import PowerNorm
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = "#000000"  # intentionally pure black (not the family presets.DEFAULT_BG)
 PROMPT = "The fundamental nature of chaos and reality is"
