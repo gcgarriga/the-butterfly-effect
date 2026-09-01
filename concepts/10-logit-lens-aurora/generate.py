@@ -20,7 +20,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = presets.DEFAULT_BG
 DEFAULT_PROMPT = "The future of artificial intelligence will"

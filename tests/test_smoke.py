@@ -14,7 +14,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from common import presets  # noqa: E402
+from common import presets
 
 CONCEPTS = [
     "1-hidden-state-divergence",
@@ -74,6 +74,7 @@ def test_cli_rejects_bad_size():
         text=True,
         timeout=120,
         env=ENV,
+        check=False,
     )
     assert result.returncode == 2, result.stderr
     assert "error:" in result.stderr
@@ -91,6 +92,7 @@ def test_generator_runs(concept, tmp_path):
         text=True,
         timeout=600,
         env=ENV,
+        check=False,
     )
     assert result.returncode == 0, f"{concept} failed:\n{result.stderr[-1000:]}"
     assert out.exists(), f"{concept} produced no output"

@@ -23,10 +23,17 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = presets.DEFAULT_BG
-DEFAULTS = dict(prompt="The", temp=1.6, ratio=0.4, k=4, max_depth=8, cap=600)
+DEFAULTS = {
+    "prompt": "The",
+    "temp": 1.6,
+    "ratio": 0.4,
+    "k": 4,
+    "max_depth": 8,
+    "cap": 600,
+}
 
 PALETTES = {
     "glow": style.PALETTES["glow"],
@@ -87,14 +94,14 @@ def compute_tree(prompt, temp, ratio, k, max_depth, cap):
 
 def load_tree(args):
     """Use the shipped cache for default generation params; else recompute from GPT-2."""
-    gen = dict(
-        prompt=args.prompt,
-        temp=args.temp,
-        ratio=args.ratio,
-        k=args.k,
-        max_depth=args.max_depth,
-        cap=args.cap,
-    )
+    gen = {
+        "prompt": args.prompt,
+        "temp": args.temp,
+        "ratio": args.ratio,
+        "k": args.k,
+        "max_depth": args.max_depth,
+        "cap": args.cap,
+    }
     cache = os.path.join(os.path.dirname(__file__), "tree_default.npz")
     if gen == DEFAULTS and os.path.exists(cache):
         d = np.load(cache)

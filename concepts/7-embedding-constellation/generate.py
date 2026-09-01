@@ -17,7 +17,7 @@ import numpy as np
 from matplotlib.collections import LineCollection
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = presets.DEFAULT_BG
 N, KNN, ITERS = 520, 4, 220

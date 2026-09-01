@@ -17,7 +17,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = presets.DEFAULT_BG
 GRID, RANGE = 81, 1.0
@@ -94,7 +94,7 @@ def descent_path(Z, steps=320):
     y, x, pts = float(sy), float(sx), []
     for k in range(steps):
         pts.append((x, y))
-        i, j = np.clip(int(round(y)), 0, GRID - 1), np.clip(int(round(x)), 0, GRID - 1)
+        i, j = np.clip(round(y), 0, GRID - 1), np.clip(round(x), 0, GRID - 1)
         dx, dy = gx[i, j], gy[i, j]
         n = np.hypot(dx, dy) + 1e-9
         step = 1.3 * (1 - k / steps) + 0.04
