@@ -16,7 +16,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
-from common import presets, style  # noqa: E402
+from common import presets, style
 
 BG = presets.DEFAULT_BG
 
@@ -49,7 +49,7 @@ def field(seed, w, h, k=44):
     """Plate aspect follows the output; mode ceilings scale so cells stay square-ish."""
     a = presets.aspect(w, h)
     lx, ly = a, 1.0
-    nmax, mmax = int(round(3 * a)) + 2, 6
+    nmax, mmax = round(3 * a) + 2, 6
     amp = spectrum(k)
     rng = np.random.default_rng(seed)
     amp = (amp / amp[0]) ** 0.5 * rng.choice([-1, 1], k)
